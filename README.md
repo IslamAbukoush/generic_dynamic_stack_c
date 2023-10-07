@@ -2,6 +2,7 @@
 generic_dynamic_stack_c
 
 Declaring a new stack:
+
 Syntax: 
 - Stack myStack = new_stack(MAX_SIZE);
 If you need to limit the size of the stack you can pass an integer value representing the maximum size.
