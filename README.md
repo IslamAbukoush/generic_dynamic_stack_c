@@ -1,5 +1,4 @@
-# generic_dynamic_stack_c
-generic_dynamic_stack_c
+# generic_dynamic_stack_c  
 
 ## Declaring a new stack:  
 ### Syntax:
