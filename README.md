@@ -30,7 +30,7 @@ push(myStack, FLOAT, 3.14);
 Another way to push an element is using the function "auto_push()", which automatically detects the type of the data that you are passing, however, it has to be written inside a string.  
 ### Syntax:
 ```c
-- auto_push(myStack, "YOUR_DATA_HERE");
+auto_push(myStack, "YOUR_DATA_HERE");
 ```
 ### Examples:
 ```c
@@ -49,7 +49,7 @@ So in a nutshell, here is how to push each type:
 ## Popping an element from the stack:
 ### Syntax: 
 ```c
-- pop(myStack);
+pop(myStack);
 ```
 Other than removing the last element, "pop()" also returns it in the form of a Variant, which is a struct that can hold any type of data, to access this return value, you need to declare a new Variant and assign the pop function to it.
 ### Syntax:
@@ -81,5 +81,5 @@ Pretty self explainatory, "is_empty()" will return 1 if the stack is of size 0 a
 After you're done with a stack, it is neccessary to free it to avoid memory leaks.
 ### Syntax:
 ```c
-- free_stack(myStack);
+free_stack(myStack);
 ```
