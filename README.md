@@ -34,12 +34,12 @@ Another way to push an element is using the function "auto_push()", which automa
 ```
 ### Examples:
 ```c
-auto_push(myStack, "10") => this will push the integer 10 into the stack.
-auto_push(myStack, "35.23") => this will push the floating point 35.23 into the stack.
-auto_push(myStack, "'H'") => this will push the character 'H' into the stack.
-auto_push(myStack, "H") => this will do the same thing as above.
-auto_push(myStack, "'0'") => this will push the character '0' to the stack.
-auto_push(myStack, "0") => this will push the integer 0 into the stack unlike the example above.
+auto_push(myStack, "10")    // => this will push the integer 10 into the stack.
+auto_push(myStack, "35.23") // => this will push the floating point 35.23 into the stack.
+auto_push(myStack, "'H'")   // => this will push the character 'H' into the stack.
+auto_push(myStack, "H")     // => this will do the same thing as above.
+auto_push(myStack, "'0'")   // => this will push the character '0' to the stack.
+auto_push(myStack, "0")     // => this will push the integer 0 into the stack unlike the example above.
 ```
 So in a nutshell, here is how to push each type:
 - int: If you need to push an integer you just have to input numerals, without including any other type of characters.
