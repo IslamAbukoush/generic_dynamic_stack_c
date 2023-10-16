@@ -250,14 +250,16 @@ int only_numerals_and_dot(char str[]) {
 
 void display_stack(Stack stack) {
     newline;
-    dashes(20);
-    printf("Your stack: (Current size: %d)", stack->size);
+    printf("-----Your stack-----\n");
+    newline;
+    printf("Size: %d\n", stack->size);
     if(stack->max_size > 0) {
-        printf("(max size: %d)\n", stack->max_size);
+        printf("Max size: %d\n", stack->max_size);
     } else {
-        printf("(max size: not limited)\n");
+        printf("Max size: unlimited\n");
     }
     print_stack(stack);
+    newline;
     dashes(20);
     newline;
 }
@@ -265,7 +267,8 @@ void display_stack(Stack stack) {
 int take_max_element() {
     int choice;
     take_max_elements:
-    printf("Enter the maximum number of elements (0 for a non-limited stack): ");
+    printf("\nEnter the maximum number of elements (0 for an unlimited stack):\n");
+    printf("-> Your choice: ");
     if(scanf("%d", &choice) < 1) {
         printf("Invalid input...\n");
         flush();
@@ -275,23 +278,6 @@ int take_max_element() {
         printf("Number of elements has to be at least 0...\n");
         flush();
         goto take_max_elements;
-    }
-    flush();
-    return choice;
-}
-
-int take_type() {
-    int choice;
-    take_type:
-    printf("\nEnter the type of the element:\n");
-    printf("1- Integer.\n");
-    printf("2- Floating point.\n");
-    printf("3- Character.\n");
-    printf("Your choice: ");
-    if(scanf("%d", &choice) < 1 || (choice > 3 || choice < 1)) {
-        printf("Invalid input...\n");
-        flush();
-        goto take_type;
     }
     flush();
     return choice;
@@ -307,7 +293,7 @@ int is_non_numeral(char str[]) {
 
 int auto_push(Stack stack, char input[]) {
     if(stack->size >= stack->max_size && stack->max_size != -1) {
-        printf("\nThe stack has reached the maximum capacity...\n");
+        printf("\nThe stack has reached its maximum capacity...\n");
     }
     else if(is_non_numeral(input)) {
         char c = input[0];
@@ -333,8 +319,8 @@ int auto_push(Stack stack, char input[]) {
 
 void take_element_input_and_push(Stack stack, char buffer[]) {
     take_element_input_and_push:
-    printf("\nIf you wish to push an integer, enter only numerals: {0-9}, if you wish to push a float, include a \".\" in your input, if you wish to push a char, include an apostrophy \"'\" before and after the element.\n");
-    printf("\nEnter the value of the element: ");
+    printf("\nWhat would you like to push?\n");
+    printf("-> Push: ");
     clear_string(buffer);
     fgets(buffer, BUFFER_SIZE-2, stdin);
     remove_last(buffer);
@@ -345,21 +331,25 @@ void take_element_input_and_push(Stack stack, char buffer[]) {
 }
 
 void display_operations() {
-    printf("\nPick an operation:\n");
-    printf("1- Push.\n");
-    printf("2- Pop.\n");
-    printf("3- Peek.\n");
-    printf("4- Check if empty.\n");
-    printf("5- Check if full.\n");
-    printf("0- Exit.\n");
-    printf("Your choice: ");
+    newline;
+    printf("+--------Operations--------+\n");
+    printf("| 1- Push.                 |\n");
+    printf("| 2- Pop.                  |\n");
+    printf("| 3- Peek.                 |\n");
+    printf("| 4- Check if empty.       |\n");
+    printf("| 5- Check if full.        |\n");
+    printf("| 6- Display stack.        |\n");
+    printf("| 7- Display instructions. |\n");
+    printf("| 0- Exit.                 |\n");
+    printf("+--------------------------+\n");
+    printf("-> Your choice: ");
 }
 
 int take_operation() {
     int choice;
     take_operation:
     display_operations();
-    if(scanf("%d", &choice) < 1 || (choice > 5 || choice < 0)) {
+    if(scanf("%d", &choice) < 1 || (choice > 7 || choice < 0)) {
         printf("Invalid input...\n");
         flush();
         goto take_operation;
@@ -405,17 +395,46 @@ void display_is_full(int is_full) {
     }
 }
 
+void display_instructions() {
+    printf("\n----Instructions----\n");
+
+    printf("\nPush an element:\n");
+    printf("To push an element, choose 1 from the main menu, and then you should enter an element, to enter a:\n");
+    printf("1- Integer: enter only numerals: {0-9}.\n");
+    printf("2- Floating point: enter only numerals: {0-9} and include a dot (\".\") where needed.\n");
+    printf("3- Character: Directly write the character including an apostrophy \"'\" before and after the it.\n");
+
+    printf("\nPop an element from stack:\n");
+    printf("To pop an element, choose 2 from the main menu.\n");
+
+    printf("\nCheck the last element (peek):\n");
+    printf("To peek, choose 3 from the main menu.\n");
+
+    printf("\nCheck if the stack is empty:\n");
+    printf("To check if the stack is empty, choose 4 from the main menu.\n");
+
+    printf("\nCheck if the stack is full:\n");
+    printf("To check if the stack is full, choose 5 from the main menu.\n");
+
+    printf("\nDisplay the stack in the console:\n");
+    printf("To display the stack, choose 6 from the main menu.\n");
+
+    printf("\nExit program:\n");
+    printf("To exit, choose 0 from the main menu.\n");
+    dashes(20);
+}
+
 int main() {
     int size;
     int status;
+    int operation;
     Variant variant;
     char buffer[BUFFER_SIZE];
     int max_size = take_max_element();
     Stack main_stack = new_stack(max_size);
 
     start:
-    display_stack(main_stack);
-    int operation = take_operation();
+    operation = take_operation();
     switch(operation) {
         case 0:
             free_stack(main_stack);
@@ -431,6 +450,10 @@ int main() {
             goto is_empty;
         case 5:
             goto is_full;
+        case 6:
+            goto display_stack;
+        case 7:
+            goto instructions;
     }
 
     push:
@@ -459,5 +482,13 @@ int main() {
     is_full:
     status = is_full(main_stack);    
     display_is_full(status);
+    goto start;
+
+    display_stack:
+    display_stack(main_stack);
+    goto start;
+
+    instructions:
+    display_instructions();
     goto start;
 }
